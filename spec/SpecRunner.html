@@ -7,10 +7,6 @@
 
     <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.0/jasmine_favicon.png">
     <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
-    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
-    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
-    <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
-    <!--<script src="lib/sinon-1.4.2.js"></script>-->
 
     <!-- include source files here... -->
 
@@ -32,8 +28,8 @@
     </script>
 
 
-    <!--<script src="../js/libs/require.js"></script>-->
-    <script data-main="../src/main" src="../src/libs/require.js"></script>
+    <script src="../src/libs/require.js"></script>
+    <script src="../src/main.js"></script>
     <script>
         (function() {
 
@@ -41,6 +37,10 @@
 
             require.config({
                 paths: {
+
+                    jasmine: specPath + '/lib/jasmine-2.0.0/jasmine',
+                    jasmineHtml: specPath + '/lib/jasmine-2.0.0/jasmine-html',
+                    boot: specPath + '/lib/jasmine-2.0.0/boot',
 
                     // Utilities
                     cs                      : specPath + "/lib/cs",
@@ -59,39 +59,32 @@
                     modelFixture            : specPath + "/fixtures/model-fixture",
                     templateFixture         : specPath + "/fixtures/template"
 
-                }
-            });
+                },
 
-
-            require(["specs"], function() {
-                var jasmineEnv = jasmine.getEnv();
-                jasmineEnv.updateInterval = 1000;
-
-                var htmlReporter = new jasmine.HtmlReporter();
-
-                jasmineEnv.addReporter(htmlReporter);
-
-                jasmineEnv.specFilter = function (spec) {
-                    return htmlReporter.specFilter(spec);
-                };
-
-                var currentWindowOnload = window.onload;
-
-                window.onload = function () {
-                    if (currentWindowOnload) {
-                        currentWindowOnload();
+                //
+                // Based on:
+                // http://stackoverflow.com/questions/19240302/does-jasmine-2-0-really-not-work-with-require-js
+                //
+                shim: {
+                    'jasmine': {
+                        exports: 'jasmine'
+                    },
+                    'jasmineHtml': {
+                        deps: ['jasmine'],
+                        exports: 'jasmine'
+                    },
+                    'boot': {
+                        deps: ['jasmine', 'jasmineHtml'],
+                        exports: 'jasmine'
                     }
-                    execJasmine();
-                };
-
-                function execJasmine() {
-                    jasmineEnv.execute();
                 }
             });
+
+            // Initiate the specs
+            require(['boot', 'models', 'specs']);
         })();
 
     </script>
-
 </head>
 
 <body>

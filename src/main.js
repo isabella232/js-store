@@ -43,9 +43,3 @@ require.config({
         }
     }
 });
-
-// Stub jQuery module, since it's a backbone dependency, but we're not using any Backbone views or routers
-define("jquery", {});
-
-// Initialize!
-require(["models"]);
