@@ -1,0 +1,13 @@
+//Copyright 2012, etc.
+
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD.
+        define(['jquery', 'underscore', 'backbone'], factory);
+    } else {
+        // Browser globals
+        root.Soomla = factory(root.$, root._);
+    }
+}(this, function ($, _, Backbone) {
+
+
