@@ -3,7 +3,6 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
 
-    }
         // AMD.
         define(['jquery', 'underscore', 'backbone', 'backboneRelational'], factory);
     } else {

@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
-  var distFolder = "./dist",
-    srcFolder = "./src";
+  var distFolder = './dist',
+    srcFolder = './src';
 
   var requirejs = {
     compile: {
@@ -9,12 +9,12 @@ module.exports = function(grunt) {
         mainConfigFile: srcFolder + '/main.js',
         out: distFolder + '/js-store.js',
         name: 'main',
-        include: ['../build/almond'],
+        include: ['../build/almond', 'models'],
         exclude: ['backbone'],
         optimize: 'none',
         wrap: {
-          "startFile": srcFolder + "/../build/wrap.start",
-          "endFile": srcFolder + "/../build/wrap.end"
+          "startFile": srcFolder + '/../build/wrap.start',
+          "endFile": srcFolder + '/../build/wrap.end'
         }
       }
     }
