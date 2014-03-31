@@ -1,8 +1,4 @@
-define("backbone", ["backboneFramework", "backboneExtensions", "backboneRelational"], function(Backbone, BackboneExtensions) {
-
-    Backbone.View.mixin = BackboneExtensions.viewMixin;
-
-
+define("backbone", ["backboneFramework", "backboneRelational"], function(Backbone) {
 
     /**
      * Moves a model to the given index, if different from its current index. Handy
