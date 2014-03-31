@@ -2,9 +2,12 @@
 
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
+
+    }
         // AMD.
-        define(['jquery', 'underscore', 'backbone'], factory);
+        define(['jquery', 'underscore', 'backbone', 'backboneRelational'], factory);
     } else {
+
         // Browser globals
         root.Soomla = factory(root.$, root._);
     }
