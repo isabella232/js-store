@@ -7,19 +7,15 @@ module.exports = function(grunt) {
     compile: {
       options: {
         mainConfigFile: srcFolder + '/main.js',
-        dir: distFolder,
+        out: distFolder + '/js-store.js',
+        name: 'main',
+        include: ['../build/almond'],
+        exclude: ['backbone'],
         optimize: 'none',
         wrap: {
           "startFile": srcFolder + "/../build/wrap.start",
           "endFile": srcFolder + "/../build/wrap.end"
-        },
-        modules: [
-          {
-            name   : "main",
-            exclude: ["backbone"],
-            include: ['../build/almond']
-          }
-        ]
+        }
       }
     }
   };
