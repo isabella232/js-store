@@ -1,4 +1,36 @@
-define ["economyModels"], (EconomyModels) ->
+define ["economyModels", "baseModels"], (EconomyModels, BaseModels) ->
+
+  describe "BaseModels", ->
+
+    beforeEach ->
+      @collection = new BaseModels.BaseCollection([{id: "Moe"}, {id: "Larry"}, {id: "Curly"}])
+      @helper = {callback: ->}
+
+
+    it "move: should move a model in the collection to the right index", ->
+      @collection.move(@collection.last(), 1)
+      expect(@collection.last().id).toBe("Larry")
+      expect(@collection.at(1).id).toBe("Curly")
+
+    it "move: should throw an error when moving to an illegal index", ->
+      expect(=>
+        @collection.move(@collection.last(), 3)
+      ).toThrow()
+      expect(=>
+        @collection.move(@collection.last(), -1)
+      ).toThrow()
+
+    it "move: should trigger a 'reset' event on the @collection", ->
+      spyOn(@helper, 'callback')
+      @collection.on('reset', @helper.callback)
+      @collection.move(@collection.last(), 1)
+      expect(@helper.callback).toHaveBeenCalled()
+
+    it "move: shouldn't trigger a 'reset' event if {silent: true} options are passed", ->
+      spyOn(@helper, 'callback')
+      @collection.on('reset', @helper.callback)
+      @collection.move(@collection.last(), 1, {silent: true})
+      expect(@helper.callback).not.toHaveBeenCalled()
 
 
   describe "Models", ->

@@ -1,4 +1,4 @@
-define("economyModels", ["backbone"], function(Backbone) {
+define("economyModels", ["backbone", "baseModels"], function(Backbone, BaseModels) {
 
     var marketPurchaseType      = "market",
         virtualItemPurchaseType = "virtualItem";
@@ -141,7 +141,7 @@ define("economyModels", ["backbone"], function(Backbone) {
             return this.set("purchasableItem", purchasableItem);
         }
     }),
-    Collection = Backbone.Collection;
+    Collection = BaseModels.BaseCollection;
 
     Object.defineProperties(PurchasableVirtualItem.prototype, {
         purchasableItem : {

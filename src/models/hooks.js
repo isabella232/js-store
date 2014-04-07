@@ -1,4 +1,4 @@
-define("hooks", ["underscore", "backbone", "stringUtils", "constants"], function(_, Backbone, StringUtils, Constants) {
+define("hooks", ["underscore", "backbone", "baseModels", "stringUtils", "constants"], function(_, Backbone, BaseModels, StringUtils, Constants) {
 
     //
     // Constants
@@ -49,7 +49,7 @@ define("hooks", ["underscore", "backbone", "stringUtils", "constants"], function
         }
     });
 
-    var ActionCollection = Backbone.Collection.extend({
+    var ActionCollection = BaseModels.BaseCollection.extend({
         model : function(attrs, options) {
             return new Action(attrs, options);
         }
@@ -89,7 +89,7 @@ define("hooks", ["underscore", "backbone", "stringUtils", "constants"], function
         ]
     });
 
-    var ProviderCollection = Backbone.Collection.extend({
+    var ProviderCollection = BaseModels.BaseCollection.extend({
         model : function(attrs, options) {
             if (attrs.id === SPONSORPAY) return new SponsorpayProvider(attrs, options);
             return new Provider(attrs, options);
