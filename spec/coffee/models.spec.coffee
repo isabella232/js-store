@@ -47,6 +47,10 @@ define ["economyModels"], (EconomyModels) ->
       it "should have a market purchase type", ->
         expect(@model.isMarketPurchaseType()).toBeTruthy
 
+    describe "Currency", ->
+
+      it "should generate a name for a currency", ->
+        expect(EconomyModels.Currency.generateNameFor("GoLd")).toBe "currency_gold"
 
     describe "CurrencyPack", ->
       beforeEach ->

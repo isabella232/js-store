@@ -9,6 +9,11 @@ define("economyModels", ["backbone"], function(Backbone) {
         }
     };
 
+    // Utility function for snake-casing strings
+    var snakeCase = function(str){
+        return str.toLowerCase().replace(/[^0-9a-z\s]+/g, "").trim().replace(/\s+/g, "_");
+    };
+
 
     /**
      * This implementation of deep extend was yanked from the jQuery 1.9.1 source.
@@ -483,7 +488,7 @@ define("economyModels", ["backbone"], function(Backbone) {
 
     }, {
         generateNameFor : function(name) {
-            return "currency_" + name.snakeCase();
+            return "currency_" + snakeCase(name);
         }
     });
 
