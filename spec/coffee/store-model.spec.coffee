@@ -84,6 +84,15 @@ define ["backbone", "storeModel", "utils", "urls", "errors",  "text!modelFixture
 
   describe "Store", ->
 
+    describe "Close function", ->
+
+      it "should unregister all relational models from Backbone.Relational", ->
+        expect(=>
+          store = new Store(deepClone(modelFixture))
+          store.close()
+          store = new Store(deepClone(modelFixture))
+        ).not.toThrow()
+
     describe "Manipulation functions", ->
       beforeEach ->
 

@@ -182,6 +182,25 @@ define("hooks", ["underscore", "backbone", "baseModels", "stringUtils", "constan
             });
 
             return json;
+        },
+        _unregister : function(entity) {
+            Backbone.Relational.store.unregister(entity);
+        },
+        close : function() {
+
+            //
+            // Remove collection items in reverse order.  This prevents a situation
+            // where the collection is mutated while iterating and items are skipped
+            //
+
+            var providers = this.getProviders();
+            for (var i = providers.length - 1; i >= 0; i--) {
+                var actions = providers.at(i).getActions();
+                for (var j = actions.length - 1; j >= 0; j--) {
+                    this._unregister(actions.at(j));
+                }
+                this._unregister(providers.at(i));
+            }
         }
     });
 

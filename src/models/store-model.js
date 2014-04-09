@@ -321,6 +321,45 @@ define("storeModel", ["backbone", "economyModels", "hooks", "modelManipulation"]
                 json.hooks = this.hooks.toJSON();
 
                 return json;
+            },
+            _unregister : function(entity) {
+                Backbone.Relational.store.unregister(entity);
+            },
+            close : function() {
+
+                //
+                // Remove collection items in reverse order.  This prevents a situation
+                // where the collection is mutated while iterating and items are skipped
+                //
+
+                var currencies = this.getCurrencies();
+                for (var i = currencies.length - 1; i >= 0; i--) {
+                    var packs = currencies.at(i).getPacks();
+                    for (var j = packs.length - 1; j >= 0; j--) {
+                        this._unregister(packs.at(j));
+                    }
+                    this._unregister(currencies.at(i));
+                }
+
+                var categories = this.getCategories();
+                for (var i = categories.length - 1; i >= 0; i--) {
+                    var goods = categories.at(i).getGoods();
+                    for (var j = goods.length - 1; j >= 0; j--) {
+                        if (goods.at(j).is("upgradable")) {
+                            var upgrades = goods.at(j).getUpgrades();
+                            for (var k = upgrades.length - 1; k >= 0; k--) {
+                                this._unregister(upgrades.at(k));
+                            }
+                        }
+                        this._unregister(goods.at(j));
+                    }
+                    this._unregister(categories.at(i));
+                }
+
+                this.hooks.close();
+
+                // TODO: Remove this once we're able to unregister all models
+                Backbone.Relational.store.reset();
             }
         });
 

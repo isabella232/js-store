@@ -23,7 +23,9 @@
                 "shaker",
                 "invisibility",
                 "more_time",
-                "switch"
+                "switch",
+                "switch_pack_5",
+                "switch_pack_10"
             ],
             "name": "POWERUPS"
         },
